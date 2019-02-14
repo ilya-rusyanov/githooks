@@ -8,7 +8,8 @@ git stash save -q --keep-index $STASH_NAME
 # check for ADDED lines with tabs
 for file in "$(git diff --name-status --cached | grep -v ^D | cut -c3-)"; do
     if [[ "${file}" =~ [.](h|hpp|c|cpp|cxx|cc|sh|bash)$ ]]; then
-        git diff --cached "${file}" | grep -n -E '^\+.*	.*$' | sed "s/^/${file}:/" && { echo error; exit 1; }
+        escaped_fn="$(echo "${file}" | sed 's/\//\\\//g')"
+        git diff --cached "${file}" | grep -n -E '^\+.*	.*$' | sed "s/^/${escaped_fn}:/" && { echo error; exit 1; }
     fi
 done
 
