@@ -11,7 +11,7 @@ for file in "$(git diff --name-status --cached | grep -v ^D | cut -c3-)"; do
     if [[ "${file}" =~ [.](h|hpp|c|cpp|cxx|cc|sh|bash)$ ]]; then
         escaped_fn="$(echo "${file}" | sed 's/\//\\\//g')"
 
-        git diff --line-prefix="${file}:" --cached -- "${file}" | grep -n -E "^${file}:\+.*${tabchar}.*$" && { echo error; exit 1; }
+        git diff --line-prefix="${file}:" --cached -- "${file}" | grep -E "^${file}:\+.*${tabchar}.*$" && { echo error; exit 1; }
     fi
 done
 
