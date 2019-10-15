@@ -1,0 +1,6 @@
+#!/bin/sh
+
+grep -qE '^refs #[0-9]+ @[0-9]+(h|m)' "$1" || {
+    echo >&2 reference ticket e.g. 'refs #1234 @1h'
+    exit 1
+}
